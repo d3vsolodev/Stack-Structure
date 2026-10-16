@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cute Stack Stucture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff7fb;--surface:#ffffff;--text:#3d3350;--muted:#9a8fb0;--border:#f1e4f3;
+  --accent:#ff8fb8;--accent-d:#f4709f;--accent-text:#fff;--ok:#5cc9a7;--bad:#ff7a8a;
+  --shadow:0 8px 24px rgba(255,143,184,.18);
+  --c0:#ffd6e7;--c1:#d9ecff;--c2:#e2f7d5;--c3:#fff1c2;--c4:#e8dcff;--ink:#4a3d63;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1e1a2b;--surface:#2a2540;--text:#f1eaff;--muted:#a89cc4;--border:#3a3356;
+  --shadow:0 8px 24px rgba(0,0,0,.3);
+  --c0:#a8527a;--c1:#4f7aa8;--c2:#5a9a6e;--c3:#b59a45;--c4:#7a62b5;--ink:#fff;color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#1e1a2b;--surface:#2a2540;--text:#f1eaff;--muted:#a89cc4;--border:#3a3356;
+  --shadow:0 8px 24px rgba(0,0,0,.3);
+  --c0:#a8527a;--c1:#4f7aa8;--c2:#5a9a6e;--c3:#b59a45;--c4:#7a62b5;--ink:#fff;color-scheme:dark;}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:600;line-height:1.5}
+main{max-width:880px;margin:0 auto;padding:24px 16px 48px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
+h1{font-size:1.7rem;font-weight:800;margin:0}
+.sub{margin:0;color:var(--muted);font-size:.95rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:700px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:2px solid var(--border);border-radius:28px;padding:22px;box-shadow:var(--shadow)}
+.card h2{font-size:.85rem;font-weight:800;color:var(--muted);margin:0 0 12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+input[type=text]{flex:1 1 120px;min-width:0;padding:12px 16px;border:2px solid var(--border);border-radius:999px;background:var(--bg);color:var(--text);font:inherit;font-size:1rem}
+input[type=text]:focus{outline:none;border-color:var(--accent)}
+button{font:inherit;font-weight:800;padding:11px 18px;border-radius:999px;border:2px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:transform .12s,box-shadow .12s}
+button:hover{transform:translateY(-2px);box-shadow:0 4px 0 var(--border)}
+button:active{transform:translateY(1px);box-shadow:none}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+button.primary{background:var(--accent);border-color:var(--accent-d);color:var(--accent-text)}
+button.primary:hover{box-shadow:0 4px 0 var(--accent-d)}
+.cap{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--muted);font-size:.9rem}
+.cap input{flex:1;accent-color:var(--accent)}
+.cap b{color:var(--text)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:var(--bg);border-radius:20px;padding:10px 6px;text-align:center}
+.stat b{display:block;font-size:1.3rem;font-weight:800}
+.stat small{color:var(--muted);font-size:.75rem}
+.msg{min-height:1.5em;margin:14px 0 4px;font-size:.95rem;text-align:center}
+.msg.err{color:var(--bad)}
+.log{list-style:none;margin:0;padding:0;max-height:150px;overflow-y:auto;font-size:.88rem}
+.log li{padding:5px 12px;margin-bottom:4px;background:var(--bg);border-radius:999px;color:var(--ok)}
+.log li.err{color:var(--bad)}
+.stage{display:flex;justify-content:center;align-items:flex-end;min-height:440px}
+.stack{position:relative;width:210px;display:flex;flex-direction:column-reverse;gap:8px;padding:12px 12px 14px;min-height:90px;background:var(--bg);border:3px dashed var(--border);border-radius:24px}
+.item{position:relative;height:48px;border-radius:18px;display:flex;align-items:center;justify-content:center;padding:0 38px 0 44px;font-weight:800;color:var(--ink);word-break:break-all;animation:drop .45s cubic-bezier(.3,1.5,.5,1)}
+.item:nth-child(5n+1){background:var(--c0)}.item:nth-child(5n+2){background:var(--c1)}
+.item:nth-child(5n+3){background:var(--c2)}.item:nth-child(5n+4){background:var(--c3)}
+.item:nth-child(5n+5){background:var(--c4)}
+.item .face{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.8rem;letter-spacing:2px;opacity:.75}
+.item .tag{position:absolute;right:10px;font-size:.65rem;background:var(--ink);color:var(--surface);padding:2px 8px;border-radius:999px;display:none}
+.item.top .tag{display:block}
+.item.out{animation:pop .3s ease forwards}
+.item.flash{animation:wiggle .6s ease}
+@keyframes drop{from{transform:translateY(-140px) scale(.8);opacity:0}to{transform:none;opacity:1}}
+@keyframes pop{to{transform:translateY(-140px) scale(.8);opacity:0}}
+@keyframes wiggle{20%{transform:rotate(-4deg) scale(1.05)}50%{transform:rotate(4deg) scale(1.05)}80%{transform:rotate(-2deg)}}
+.empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-size:.95rem;pointer-events:none}
+.empty span{font-size:1.6rem}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>Cute Stack 🍰</h1>
+      <p class="sub">Last in, first out. Stack them up!</p>
+    </div>
+    <button id="theme" aria-label="Toggle theme">🌙</button>
+  </header>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Play with it</h2>
+      <div class="row">
+        <input id="val" type="text" placeholder="Add a value" maxlength="10" autocomplete="off">
+        <button class="primary" id="push">Push</button>
+      </div>
+      <div class="row">
+        <button id="pop">Pop</button>
+        <button id="peek">Peek</button>
+        <button id="empty">isEmpty</button>
+        <button id="clear">Clear</button>
+      </div>
+      <div class="cap"><label for="capacity">Capacity</label><input id="capacity" type="range" min="1" max="10" value="8"><b id="capv">8</b></div>
+      <div class="stats">
+        <div class="stat"><b id="size">0</b><small>Size</small></div>
+        <div class="stat"><b id="topv">-</b><small>Top</small></div>
+        <div class="stat"><b id="free">8</b><small>Free</small></div>
+      </div>
+      <div class="msg" id="msg" role="status"></div>
+      <h2>Recent moves</h2>
+      <ul class="log" id="log"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Your stack</h2>
+      <div class="stage">
+        <div class="stack" id="stack"><div class="empty" id="emptyMsg"><span>🫧</span>nothing here yet</div></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+(function(){
+  var stack=[], cap=8;
+  var $=function(id){return document.getElementById(id)};
+  var stackEl=$("stack"), val=$("val"), msg=$("msg"), logEl=$("log");
+
+  function say(t,err){msg.textContent=t;msg.className="msg"+(err?" err":"")}
+  function log(t,err){
+    var li=document.createElement("li"); li.textContent=t; if(err) li.className="err";
+    logEl.insertBefore(li,logEl.firstChild);
+    while(logEl.children.length>20) logEl.removeChild(logEl.lastChild);
+  }
+  function stats(){
+    $("size").textContent=stack.length;
+    $("topv").textContent=stack.length?stack[stack.length-1]:"-";
+    $("free").textContent=cap-stack.length;
+    $("capv").textContent=cap;
+    $("emptyMsg").style.display=stack.length?"none":"flex";
+  }
+  function build(v,isTop){
+    var d=document.createElement("div"); d.className="item"+(isTop?" top":"");
+    var f=document.createElement("span"); f.className="face"; f.textContent="^ᴗ^";
+    var t=document.createElement("span"); t.textContent=v;
+    var g=document.createElement("span"); g.className="tag"; g.textContent="top";
+    d.appendChild(f); d.appendChild(t); d.appendChild(g); return d;
+  }
+  function render(){
+    stackEl.querySelectorAll(".item").forEach(function(n){n.remove()});
+    stack.forEach(function(v,i){
+      var d=build(v,i===stack.length-1); d.style.animation="none"; stackEl.appendChild(d);
+    });
+    stats();
+  }
+  function push(){
+    var v=val.value.trim();
+    if(!v){say("Type something first ✏️",true);val.focus();return}
+    if(stack.length>=cap){say("Oops, the stack is full! 🙈",true);log("push("+v+") overflow",true);return}
+    var old=stackEl.querySelector(".item.top"); if(old) old.classList.remove("top");
+    stack.push(v); stackEl.appendChild(build(v,true));
+    val.value=""; stats(); say("Pushed "+v+" ✨"); log("push("+v+")"); val.focus();
+  }
+  function pop(){
+    if(!stack.length){say("Nothing to pop, it's empty! 🫧",true);log("pop() underflow",true);return}
+    var v=stack.pop(), top=stackEl.querySelector(".item.top");
+    if(top){top.classList.remove("top");top.classList.add("out");setTimeout(function(){top.remove()},300)}
+    var items=stackEl.querySelectorAll(".item:not(.out)");
+    if(items.length) items[items.length-1].classList.add("top");
+    stats(); say("Popped "+v+" 👋"); log("pop() → "+v);
+  }
+  function peek(){
+    if(!stack.length){say("Empty, nothing to peek at 🫧",true);log("peek() empty",true);return}
+    var v=stack[stack.length-1], top=stackEl.querySelector(".item.top");
+    if(top){top.classList.remove("flash");void top.offsetWidth;top.classList.add("flash")}
+    say("The top is "+v+" 👀"); log("peek() → "+v);
+  }
+  function isEmpty(){var e=!stack.length;say("isEmpty() is "+e);log("isEmpty() → "+e)}
+  function clearAll(){stack=[];render();say("All cleared 🧹");log("clear()")}
+
+  $("push").onclick=push;$("pop").onclick=pop;$("peek").onclick=peek;$("empty").onclick=isEmpty;$("clear").onclick=clearAll;
+  val.addEventListener("keydown",function(e){if(e.key==="Enter")push()});
+  $("capacity").oninput=function(e){cap=+e.target.value;while(stack.length>cap)stack.pop();render()};
+  $("theme").onclick=function(){
+    var r=document.documentElement;
+    var dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+    r.dataset.theme=dark?"light":"dark"; $("theme").textContent=dark?"🌙":"☀️";
+  };
+  ["10","20","30"].forEach(function(v){stack.push(v)});
+  render(); say("Try push, pop or peek 🍬");
+})();
+</script>
+</body>
+</html>
