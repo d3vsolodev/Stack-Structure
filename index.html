@@ -1,292 +1,50 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Hello, World!</title>
-    <link rel="st<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cute Stack</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#fff7fb;--surface:#ffffff;--card:rgba(255,255,255,.86);--text:#3d3350;--muted:#9a8fb0;--border:#f1e4f3;
-  --accent:#ff8fb8;--accent-d:#f4709f;--accent-text:#fff;--ok:#5cc9a7;--bad:#ff7a8a;
-  --tg:#2aabee;--tg-d:#1e8fcb;
-  --g1:#fff0f7;--g2:#eaf4ff;--g3:#fff8e1;
-  --shadow:0 8px 24px rgba(255,143,184,.18);
-  --c0:#ffd6e7;--c1:#d9ecff;--c2:#e2f7d5;--c3:#fff1c2;--c4:#e8dcff;--ink:#4a3d63;
-  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light;
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#1e1a2b;--surface:#2a2540;--card:rgba(42,37,64,.86);--text:#f1eaff;--muted:#a89cc4;--border:#3a3356;
-  --g1:#1e1a2b;--g2:#272046;--g3:#2d2140;
-  --shadow:0 8px 24px rgba(0,0,0,.3);
-  --c0:#a8527a;--c1:#4f7aa8;--c2:#5a9a6e;--c3:#b59a45;--c4:#7a62b5;--ink:#fff;color-scheme:dark;}}
-:root[data-theme="dark"]{
-  --bg:#1e1a2b;--surface:#2a2540;--card:rgba(42,37,64,.86);--text:#f1eaff;--muted:#a89cc4;--border:#3a3356;
-  --g1:#1e1a2b;--g2:#272046;--g3:#2d2140;
-  --shadow:0 8px 24px rgba(0,0,0,.3);
-  --c0:#a8527a;--c1:#4f7aa8;--c2:#5a9a6e;--c3:#b59a45;--c4:#7a62b5;--ink:#fff;color-scheme:dark;}
-*{box-sizing:border-box}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--text);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:600;line-height:1.5}
-main{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:24px 16px 150px}
-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
-h1{font-size:1.7rem;font-weight:800;margin:0}
-.sub{margin:0;color:var(--muted);font-size:.95rem}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media (max-width:700px){.grid{grid-template-columns:1fr}}
-.card{background:var(--card);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:2px solid var(--border);border-radius:28px;padding:22px;box-shadow:var(--shadow)}
-.card h2{font-size:.85rem;font-weight:800;color:var(--muted);margin:0 0 12px}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-input[type=text]{flex:1 1 120px;min-width:0;padding:12px 16px;border:2px solid var(--border);border-radius:999px;background:var(--bg);color:var(--text);font:inherit;font-size:1rem}
-input[type=text]:focus{outline:none;border-color:var(--accent)}
-button{font:inherit;font-weight:800;padding:11px 18px;border-radius:999px;border:2px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:transform .12s,box-shadow .12s}
-button:hover{transform:translateY(-2px);box-shadow:0 4px 0 var(--border)}
-button:active{transform:translateY(1px);box-shadow:none}
-button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-button.primary{background:var(--accent);border-color:var(--accent-d);color:var(--accent-text)}
-button.primary:hover{box-shadow:0 4px 0 var(--accent-d)}
-.cap{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--muted);font-size:.9rem}
-.cap input{flex:1;accent-color:var(--accent)}
-.cap b{color:var(--text)}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.stat{background:var(--bg);border-radius:20px;padding:10px 6px;text-align:center}
-.stat b{display:block;font-size:1.3rem;font-weight:800}
-.stat small{color:var(--muted);font-size:.75rem}
-.msg{min-height:1.5em;margin:14px 0 4px;font-size:.95rem;text-align:center}
-.msg.err{color:var(--bad)}
-.log{list-style:none;margin:0;padding:0;max-height:150px;overflow-y:auto;font-size:.88rem}
-.log li{padding:5px 12px;margin-bottom:4px;background:var(--bg);border-radius:999px;color:var(--ok)}
-.log li.err{color:var(--bad)}
-.stage{display:flex;justify-content:center;align-items:flex-end;min-height:440px}
-.stack{position:relative;width:210px;display:flex;flex-direction:column-reverse;gap:8px;padding:12px 12px 14px;min-height:90px;background:var(--bg);border:3px dashed var(--border);border-radius:24px}
-.item{position:relative;height:48px;border-radius:18px;display:flex;align-items:center;justify-content:center;padding:0 38px 0 44px;font-weight:800;color:var(--ink);word-break:break-all;animation:drop .45s cubic-bezier(.3,1.5,.5,1)}
-.item:nth-child(5n+1){background:var(--c0)}.item:nth-child(5n+2){background:var(--c1)}
-.item:nth-child(5n+3){background:var(--c2)}.item:nth-child(5n+4){background:var(--c3)}
-.item:nth-child(5n+5){background:var(--c4)}
-.item .face{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.8rem;letter-spacing:2px;opacity:.75}
-.item .tag{position:absolute;right:10px;font-size:.65rem;background:var(--ink);color:var(--surface);padding:2px 8px;border-radius:999px;display:none}
-.item.top .tag{display:block}
-.item.out{animation:pop .3s ease forwards}
-.item.flash{animation:wiggle .6s ease}
-@keyframes drop{from{transform:translateY(-140px) scale(.8);opacity:0}to{transform:none;opacity:1}}
-@keyframes pop{to{transform:translateY(-140px) scale(.8);opacity:0}}
-@keyframes wiggle{20%{transform:rotate(-4deg) scale(1.05)}50%{transform:rotate(4deg) scale(1.05)}80%{transform:rotate(-2deg)}}
-.empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-size:.95rem;pointer-events:none}
-.empty span{font-size:1.6rem}
-
-/* Contact us */
-.contact{margin-top:18px;text-align:center}
-.contact h2{margin:0 0 4px;font-size:1.1rem;color:var(--text)}
-.contact p{margin:0 0 14px;color:var(--muted);font-size:.95rem}
-.contact .name{color:var(--text);font-weight:800}
-.tg{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;background:var(--tg);border:2px solid var(--tg-d);color:#fff;text-decoration:none;font-weight:800;transition:transform .12s,box-shadow .12s}
-.tg:hover{transform:translateY(-2px);box-shadow:0 4px 0 var(--tg-d)}
-.tg:active{transform:translateY(1px);box-shadow:none}
-.tg:focus-visible{outline:3px solid var(--tg);outline-offset:2px}
-.tg svg{width:20px;height:20px;fill:#fff}
-footer{margin-top:18px;text-align:center;color:var(--muted);font-size:.85rem}
-
-/* Cute cat background */
-.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
-  background:linear-gradient(120deg,var(--g1),var(--g2),var(--g3),var(--g1));background-size:300% 300%;animation:drift 18s ease-in-out infinite}
-@keyframes drift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.float{position:absolute;bottom:-60px;opacity:.55;animation:rise linear infinite;will-change:transform}
-@keyframes rise{
-  0%{transform:translate(0,0) rotate(-12deg)}
-  25%{transform:translate(18px,-28vh) rotate(10deg)}
-  50%{transform:translate(-14px,-58vh) rotate(-8deg)}
-  75%{transform:translate(16px,-88vh) rotate(12deg)}
-  100%{transform:translate(0,-125vh) rotate(-10deg)}
-}
-.cat{position:fixed;right:12px;bottom:calc(8px + env(safe-area-inset-bottom,0px));width:120px;height:120px;z-index:2;pointer-events:none;animation:bob 3.2s ease-in-out infinite}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-.cat .fur{fill:#ffe9cf;stroke:#4a3d63;stroke-width:2.5;stroke-linejoin:round}
-.cat .inner{fill:#ffb3cf}
-.cat .eye{fill:#4a3d63;transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
-.cat .line{fill:none;stroke:#4a3d63;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.cat .tail{fill:none;stroke:#4a3d63;stroke-width:15;stroke-linecap:round;transform-origin:90px 100px;animation:wag 1.6s ease-in-out infinite}
-.cat .tail-in{fill:none;stroke:#ffe9cf;stroke-width:10;stroke-linecap:round;transform-origin:90px 100px;animation:wag 1.6s ease-in-out infinite}
-.cat .cheek{fill:#ffb3cf;opacity:.7}
-@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
-@keyframes wag{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(14deg)}}
-@media (max-width:700px){.cat{width:92px;height:92px}}
-@media (prefers-reduced-motion:reduce){.bg,.float,.cat,.cat *{animation:none!important}}
-</style>
+<title>Stack Operations</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,600;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<div class="bg" id="bg" aria-hidden="true"></div>
-
-<svg class="cat" viewBox="0 0 120 120" aria-hidden="true">
-  <path class="tail" d="M90 100 Q116 96 108 66"/>
-  <path class="tail-in" d="M90 100 Q116 96 108 66"/>
-  <ellipse class="fur" cx="60" cy="98" rx="32" ry="20"/>
-  <polygon class="fur" points="30,42 34,14 54,32"/>
-  <polygon class="fur" points="90,42 86,14 66,32"/>
-  <polygon class="inner" points="35,36 37,21 48,31"/>
-  <polygon class="inner" points="85,36 83,21 72,31"/>
-  <ellipse class="fur" cx="60" cy="58" rx="33" ry="28"/>
-  <ellipse class="eye" cx="47" cy="57" rx="4" ry="5.5"/>
-  <ellipse class="eye" cx="73" cy="57" rx="4" ry="5.5"/>
-  <circle class="cheek" cx="38" cy="67" r="5"/>
-  <circle class="cheek" cx="82" cy="67" r="5"/>
-  <path d="M57 64 L63 64 L60 68 Z" fill="#ff8fb8"/>
-  <path class="line" d="M60 68 Q60 74 54 73 M60 68 Q60 74 66 73"/>
-  <path class="line" d="M24 62 L38 64 M24 70 L38 69 M96 62 L82 64 M96 70 L82 69"/>
-  <ellipse class="fur" cx="46" cy="112" rx="9" ry="6"/>
-  <ellipse class="fur" cx="74" cy="112" rx="9" ry="6"/>
-</svg>
-
-<main>
-  <header>
-    <div>
-      <h1>Cute Stack 🍰</h1>
-      <p class="sub">Last in, first out. Stack them up!</p>
+<button class="btn theme" id="theme" aria-label="Toggle theme">🌙</button>
+<div class="app">
+  <aside class="card">
+    <h2 class="lib">Operation library</h2>
+    <input id="q" type="text" placeholder="Search operations…" aria-label="Search operations" autocomplete="off">
+    <div class="list" id="list"></div>
+  </aside>
+  <main class="card">
+    <div class="top">
+      <div><p class="cnt" id="cnt"></p><h1 id="title"></h1></div>
+      <span class="tag">Stack</span>
     </div>
-    <button id="theme" aria-label="Toggle theme">🌙</button>
-  </header>
-
-  <div class="grid">
-    <section class="card">
-      <h2>Play with it</h2>
-      <div class="row">
-        <input id="val" type="text" placeholder="Add a value" maxlength="10" autocomplete="off">
-        <button class="primary" id="push">Push</button>
-      </div>
-      <div class="row">
-        <button id="pop">Pop</button>
-        <button id="peek">Peek</button>
-        <button id="empty">isEmpty</button>
-        <button id="clear">Clear</button>
-      </div>
-      <div class="cap"><label for="capacity">Capacity</label><input id="capacity" type="range" min="1" max="10" value="8"><b id="capv">8</b></div>
+    <p class="desc" id="desc"></p>
+    <div id="inwrap"><label class="f" for="inp">Value</label><input id="inp" type="text" maxlength="10" autocomplete="off" placeholder="Type a value"></div>
+    <p class="hint" id="hint"></p>
+    <div class="btns">
+      <button class="btn run" id="run">▶ Run operation</button>
+      <button class="btn" id="reset">Reset stack</button>
+      <button class="btn" id="copy">Copy result</button>
+    </div>
+    <div class="cap"><label for="capacity">Capacity</label><input id="capacity" type="range" min="1" max="10" value="8"><b id="capv">8</b></div>
+    <div class="viz">
+      <div class="stack" id="stack"><div class="empty" id="emptyMsg"><span>🫧</span>nothing here yet</div></div>
       <div class="stats">
         <div class="stat"><b id="size">0</b><small>Size</small></div>
         <div class="stat"><b id="topv">-</b><small>Top</small></div>
         <div class="stat"><b id="free">8</b><small>Free</small></div>
       </div>
-      <div class="msg" id="msg" role="status"></div>
-      <h2>Recent moves</h2>
-      <ul class="log" id="log"></ul>
-    </section>
-
-    <section class="card">
-      <h2>Your stack</h2>
-      <div class="stage">
-        <div class="stack" id="stack"><div class="empty" id="emptyMsg"><span>🫧</span>nothing here yet</div></div>
-      </div>
-    </section>
-  </div>
-
-  <section class="card contact" id="contact">
-    <h2>Contact us 💌</h2>
-    <p>Made with love by <span class="name">Thea Vithean</span>. Say hi, or follow me on Telegram!</p>
-    <a class="tg" href="https://t.me/theavithean" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.78 15.17l-.4 4.2c.57 0 .82-.25 1.12-.54l2.69-2.57 5.58 4.08c1.02.57 1.74.27 2.02-.94l3.66-17.15h0c.32-1.5-.54-2.08-1.54-1.71L1.4 10.8c-1.47.57-1.45 1.39-.25 1.76l5.5 1.71L19.4 6.2c.6-.4 1.15-.18.7.22z"/></svg>
-      Follow on Telegram
-    </a>
-  </section>
-
-  <footer>© Thea Vithean</footer>
-</main>
-
-<script>
-(function(){
-  /* Floating cats and paws */
-  var bg=document.getElementById("bg");
-  var icons=["🐱","😺","😸","🐾","🐈","😻","🐾","🐱"];
-  for(var i=0;i<16;i++){
-    var s=document.createElement("span");
-    s.className="float";
-    s.textContent=icons[i%icons.length];
-    s.style.left=(Math.random()*94)+"%";
-    s.style.fontSize=(22+Math.random()*26)+"px";
-    s.style.animationDuration=(16+Math.random()*16)+"s";
-    s.style.animationDelay=(-Math.random()*30)+"s";
-    bg.appendChild(s);
-  }
-
-  /* Stack logic */
-  var stack=[], cap=8;
-  var $=function(id){return document.getElementById(id)};
-  var stackEl=$("stack"), val=$("val"), msg=$("msg"), logEl=$("log");
-
-  function say(t,err){msg.textContent=t;msg.className="msg"+(err?" err":"")}
-  function log(t,err){
-    var li=document.createElement("li"); li.textContent=t; if(err) li.className="err";
-    logEl.insertBefore(li,logEl.firstChild);
-    while(logEl.children.length>20) logEl.removeChild(logEl.lastChild);
-  }
-  function stats(){
-    $("size").textContent=stack.length;
-    $("topv").textContent=stack.length?stack[stack.length-1]:"-";
-    $("free").textContent=cap-stack.length;
-    $("capv").textContent=cap;
-    $("emptyMsg").style.display=stack.length?"none":"flex";
-  }
-  function build(v,isTop){
-    var d=document.createElement("div"); d.className="item"+(isTop?" top":"");
-    var f=document.createElement("span"); f.className="face"; f.textContent="^ᴗ^";
-    var t=document.createElement("span"); t.textContent=v;
-    var g=document.createElement("span"); g.className="tag"; g.textContent="top";
-    d.appendChild(f); d.appendChild(t); d.appendChild(g); return d;
-  }
-  function render(){
-    stackEl.querySelectorAll(".item").forEach(function(n){n.remove()});
-    stack.forEach(function(v,i){
-      var d=build(v,i===stack.length-1); d.style.animation="none"; stackEl.appendChild(d);
-    });
-    stats();
-  }
-  function push(){
-    var v=val.value.trim();
-    if(!v){say("Type something first ✏️",true);val.focus();return}
-    if(stack.length>=cap){say("Oops, the stack is full! 🙈",true);log("push("+v+") overflow",true);return}
-    var old=stackEl.querySelector(".item.top"); if(old) old.classList.remove("top");
-    stack.push(v); stackEl.appendChild(build(v,true));
-    val.value=""; stats(); say("Pushed "+v+" ✨"); log("push("+v+")"); val.focus();
-  }
-  function pop(){
-    if(!stack.length){say("Nothing to pop, it's empty! 🫧",true);log("pop() underflow",true);return}
-    var v=stack.pop(), top=stackEl.querySelector(".item.top");
-    if(top){top.classList.remove("top");top.classList.add("out");setTimeout(function(){top.remove()},300)}
-    var items=stackEl.querySelectorAll(".item:not(.out)");
-    if(items.length) items[items.length-1].classList.add("top");
-    stats(); say("Popped "+v+" 👋"); log("pop() → "+v);
-  }
-  function peek(){
-    if(!stack.length){say("Empty, nothing to peek at 🫧",true);log("peek() empty",true);return}
-    var v=stack[stack.length-1], top=stackEl.querySelector(".item.top");
-    if(top){top.classList.remove("flash");void top.offsetWidth;top.classList.add("flash")}
-    say("The top is "+v+" 👀"); log("peek() → "+v);
-  }
-  function isEmpty(){var e=!stack.length;say("isEmpty() is "+e);log("isEmpty() → "+e)}
-  function clearAll(){stack=[];render();say("All cleared 🧹");log("clear()")}
-
-  $("push").onclick=push;$("pop").onclick=pop;$("peek").onclick=peek;$("empty").onclick=isEmpty;$("clear").onclick=clearAll;
-  val.addEventListener("keydown",function(e){if(e.key==="Enter")push()});
-  $("capacity").oninput=function(e){cap=+e.target.value;while(stack.length>cap)stack.pop();render()};
-  $("theme").onclick=function(){
-    var r=document.documentElement;
-    var dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
-    r.dataset.theme=dark?"light":"dark"; $("theme").textContent=dark?"🌙":"☀️";
-  };
-  ["10","20","30"].forEach(function(v){stack.push(v)});
-  render(); say("Try push, pop or peek 🍬");
-})();
-</script>
+    </div>
+    <div class="out"><div>
+      <div class="oh"><span class="ol">Output</span><span id="st">Ready</span></div>
+      <pre id="res" role="status">Ready. Press Run operation to see the result.</pre>
+    </div></div>
+    <div class="contact">Made with love by <b>Thea Vithean</b><br>
+      <a href="https://t.me/theavithean" target="_blank" rel="noopener noreferrer">Follow on Telegram</a></div>
+  </main>
+</div>
+<script src="script.js"></script>
 </body>
-</html>ylesheet" href="styles.css" />
-  </head>
-  <body>
-      <h1 class="title">Hello World!</h1>
-      <p id="currentTime"></p>
-      <script src="script.js"></script>
-  </body>
 </html>
