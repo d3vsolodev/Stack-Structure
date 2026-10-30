@@ -206,3 +206,110 @@ pre{overflow-wrap:anywhere}
   .app{padding-top:56px}
   .stack{min-height:80px}
 }
+
+@media (max-width:220px){
+ 
+  /* Always dark: black saves battery on OLED, and the toggle is hidden */
+  :root{
+    --bg1:#000;--bg2:#0d0a1f;--card:#14102b;--ink:#f3eefc;--muted:#b4aed2;
+    --field:#1a1736;--sky:#2e4d70;--skytext:#f3eefc;--dot:rgba(255,255,255,0);
+    --c0:#a8527a;--c1:#4f7aa8;--c2:#5a9a6e;--c3:#8f7a2f;--c4:#7a62b5;--itext:#fff;
+    color-scheme:dark;
+  }
+  body{background:#000;font-size:13px}
+ 
+  /* Layout: one tight column, no wasted space */
+  .app{padding:6px;gap:10px}
+  .card{
+    padding:12px 10px;
+    border-width:2px;
+    border-radius:18px;
+    box-shadow:3px 3px 0 var(--pink);
+  }
+ 
+  /* Hide what a tiny screen doesn't need */
+  .theme,.tag,.desc,.contact,.cnt,.cap label{display:none}
+ 
+  /* Text */
+  h2.lib{font-size:.85rem;margin-bottom:8px}
+  h1{font-size:1.3rem;margin:0 0 8px}
+  label.f{font-size:.75rem;margin-bottom:4px}
+  .hint{font-size:.7rem;margin:6px 0 10px}
+ 
+  /* Search and value inputs */
+  #q,#inp{
+    padding:8px 12px;
+    font-size:14px;
+    border-width:2px;
+    margin-bottom:8px;
+  }
+ 
+  /* Operation pills: compact swipe row */
+  .list{padding:2px 4px 10px;margin:0;gap:4px}
+  .item{padding:6px 10px;gap:6px;font-size:.8rem;border-width:2px}
+  .item b{font-size:.7rem}
+  .item.on{box-shadow:0 3px 0 var(--ink)}
+ 
+  /* Buttons: full-width and easy to tap */
+  .btns{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:12px}
+  .btn:not(.theme){
+    width:100%;
+    min-height:36px;
+    padding:8px 10px;
+    font-size:.85rem;
+    border-width:2px;
+    box-shadow:3px 3px 0 var(--ink);
+  }
+  .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+ 
+  /* Capacity slider */
+  .cap{margin:0 0 10px;gap:8px;font-size:.75rem}
+  .cap input{max-width:none}
+ 
+  /* Stack + counters */
+  .viz{flex-direction:column;align-items:stretch;gap:10px;margin-bottom:12px}
+  .stack{
+    width:100%;
+    min-height:60px;
+    gap:5px;
+    padding:8px;
+    border-width:2px;
+    border-radius:16px;
+  }
+  .cell{
+    height:30px;
+    padding:0 28px 0 12px;
+    font-size:.8rem;
+    border-width:2px;
+    box-shadow:0 2px 0 var(--ink);
+  }
+  .cell .tg{font-size:.5rem;right:6px;padding:1px 5px}
+  .empty{font-size:.75rem}
+  .empty span{font-size:1.1rem}
+  .stats{width:100%;min-width:0;gap:5px;grid-template-columns:repeat(3,1fr)}
+  .stat{padding:5px 2px;border-width:2px;border-radius:12px;box-shadow:2px 2px 0 var(--ink)}
+  .stat b{font-size:.95rem}
+  .stat small{font-size:.55rem}
+ 
+  /* Output panel */
+  .out{border-width:2px;border-radius:16px;box-shadow:3px 3px 0 var(--pink);padding:4px}
+  .out>div{border-width:2px;border-radius:12px;padding:8px;min-height:70px}
+  .oh{margin-bottom:6px}
+  .ol{font-size:.7rem;padding:1px 10px}
+  #st{font-size:.7rem}
+  pre{font-size:.72rem;line-height:1.4}
+ 
+  /* Save battery: drop decorative motion */
+  .card{animation:none}
+  .item.on::after{display:none}
+  .stat b.bump,pre.fade{animation:none}
+}
+ 
+/* 38mm and 40mm (136px to 162px) */
+@media (max-width:165px){
+  .app{padding:4px}
+  h1{font-size:1.1rem}
+  .item span{max-width:90px;overflow:hidden;text-overflow:ellipsis}
+  .stat small{display:none}
+}
+
